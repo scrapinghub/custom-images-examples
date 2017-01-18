@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+# -u disabled output buffering
+python3 -u /spider/spider.py

@@ -35,9 +35,6 @@ class Spider(object):
     def __init__(self, writer):
         self.writer = writer
 
-    def initialize(self):
-        self.writer.write('INI', {'auto_samples': True})
-
     def produce_item(self, it):
         self.writer.write('ITM', it)
 
@@ -91,7 +88,6 @@ def main():
     writer = PipeWriter(pipe_path)
     setup_logging(writer)
     spider = Spider(writer)
-    spider.initialize()
     logger.debug('Job data %s', job_data)
     for i in range(N):
         k = i % (N / 100)

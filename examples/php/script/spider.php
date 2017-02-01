@@ -12,7 +12,6 @@ class Spider {
 
     function __construct() {
         $this -> pipe = fopen($_ENV['SHUB_FIFO_PATH'], 'r+');
-        $this -> write_to_pipe('INI', Array('auto_samples' => true));
         $this -> log(20, 'SHUB_FIFO_PATH: ' . $_ENV['SHUB_FIFO_PATH']);
     }
 

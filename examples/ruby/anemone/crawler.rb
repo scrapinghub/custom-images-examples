@@ -1,11 +1,18 @@
 #!/usr/bin/env ruby
-require "anemone"
 require "json"
 
 if File.basename(Process::argv0) == "list-spiders"
   puts "blog"
   exit
 end
+
+require 'rubygems'
+Gem.clear_paths
+ENV["GEM_HOME"] = "/usr/local/bundle"
+ENV["GEM_PATH"] = "/usr/local/bundle"
+puts Gem.dir
+puts Gem.path
+require "anemone"
 
 begin
   outfile = File.open(ENV.fetch("SHUB_FIFO_PATH"), :mode => "w")

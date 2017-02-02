@@ -17,4 +17,5 @@ COPY Gemfile Gemfile.lock ./
 RUN apk --no-cache --virtual build-dependencies add build-base && \
     bundle install && \
     apk del build-dependencies
+
 COPY . /app

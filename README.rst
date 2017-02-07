@@ -21,3 +21,8 @@ Python
 ------
 
 - `Example script <examples/python/script/>`_
+
+Go
+------
+
+- `jsontest.com crawler <examples/go/jsontest.com/>`_

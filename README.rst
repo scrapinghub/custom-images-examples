@@ -14,14 +14,14 @@ to the root of the new language directory.
 Go
 --
 
-- `jsontest.com crawler <examples/go/jsontest.com/>`_
+- `jsontest.com crawler <examples/go/jsontest.com>`_
 
 PHP
 ---
 
-- `http://httpbin.org crawler <examples/php/script/>`_
+- `httpbin.org crawler <examples/php/httpbin.org>`_
 
 Python
 ------
 
-- `Example script <examples/python/script/>`_
+- `Example script <examples/python/script>`_

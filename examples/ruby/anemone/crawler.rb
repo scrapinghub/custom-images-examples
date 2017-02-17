@@ -26,7 +26,7 @@ Anemone.crawl("https://blog.scrapinghub.com", :verbose => true) do |anemone|
 
   anemone.on_pages_like(BLOGPOST_LINK) do |page|
     title = page.doc.css("h1.entry-title").text
-    outfile.write JSON.generate({:title => title})
+    outfile.write JSON.generate({:title => title, :url => page.url})
     outfile.write "\n"
   end
 end

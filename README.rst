@@ -16,6 +16,11 @@ Go
 
 - `jsontest.com crawler <examples/go/jsontest.com>`_
 
+Java
+----
+
+- `blog.scrapinghub.com crawler <examples/java/blog.scrapinghub.com>`_
+
 PHP
 ---
 

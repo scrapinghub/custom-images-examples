@@ -11,29 +11,48 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 
+class FifoWriter {
+    private BufferedWriter writer;
+
+    public FifoWriter(String fifoPath) {
+        Path shubFifo = Paths.get(fifoPath);
+        try {
+            writer = Files.newBufferedWriter(shubFifo);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void write(String data) {
+        try {
+            writer.write(data);
+            writer.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+}
+
+
 public class BlogSpider {
-    Path shubFifo;
+    private FifoWriter writer;
 
     public BlogSpider() {
-
         String shubFifoPath = System.getenv("SHUB_FIFO_PATH");
 
         if (shubFifoPath != null) {
-            shubFifo = Paths.get(shubFifoPath);
+            writer = new FifoWriter(shubFifoPath);
         }
     }
 
     public void writeToFifo(String prefix, String payload) {
         String msg = String.format("%s %s\n", prefix, payload);
 
-        if (shubFifo != null) {
-            try (BufferedWriter writer = Files.newBufferedWriter(shubFifo)) {
-                writer.write(msg);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        if (writer != null) {
+            writer.write(msg);
         } else {
-            System.out.println(msg.trim());
+            System.out.println();
         }
     }
 

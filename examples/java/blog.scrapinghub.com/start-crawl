@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+java -cp /spider:/spider/jsoup.jar:/spider/gson.jar BlogSpider

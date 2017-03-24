@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+ls -1 --color=never /home/casperjs-files

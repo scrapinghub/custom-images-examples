@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+casperjs /home/casperjs-files/query-casperjs.js

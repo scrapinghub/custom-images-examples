@@ -30,3 +30,8 @@ Python
 ------
 
 - `Example script <examples/python/script>`_
+
+Ruby
+----
+
+- `blog.scrapinghub.com Anemone crawler <examples/ruby/anemone>`_

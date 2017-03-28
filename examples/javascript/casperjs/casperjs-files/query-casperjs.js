@@ -6,8 +6,10 @@ var env = system.env;
 
 var fifop = env.SHUB_FIFO_PATH;
 var fifo;
+var fifoIsPipe = false;
 if (typeof fifop != 'undefined') {
     fifo = fs.open(fifop, 'a+');
+    fifoIsPipe = true;
 } else {
     fifo = system.stdout;
 }
@@ -38,6 +40,13 @@ function writeRequest(stream, response) {
     stream.write('REQ ' + output + '\n');
 }
 
+function writeFinished(stream, outcome) {
+    var output = JSON.stringify({
+            "outcome": outcome
+        });
+    stream.write('FIN ' + output + '\n');
+}
+
 casper.on('log', function(log) {
     writeLog(fifo, log);
 });
@@ -47,7 +56,8 @@ casper.on('http.status.200', function(response) {
         duration: 0,    // this is wrong obviously
         status: 200,
         rs: this.getPageContent().length,
-        url: response.url
+        url: response.url,
+        method: 'GET'
     });
 })
 
@@ -72,6 +82,10 @@ casper.run(function () {
         var item = {"url": links[i], "date": new Date()}
         writeItem(fifo, item);
     }
+    writeFinished(fifo, "finished");
     fifo.flush();
+    if (fifoIsPipe) {
+        fifo.close();
+    }
     this.exit();
 });

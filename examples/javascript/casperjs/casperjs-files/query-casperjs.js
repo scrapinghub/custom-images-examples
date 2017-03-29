@@ -1,75 +1,53 @@
-var casper = require('casper').create();
-var links;
-var fs = require('fs');
+// Adapted example from http://casperjs.org/
 var system = require('system');
-var env = system.env;
+var fifopath = system.env.SHUB_FIFO_PATH;
+var fifo = fifopath ? open(fifopath, 'a+') : system.stdout;
 
-var fifop = env.SHUB_FIFO_PATH;
-var fifo;
-var fifoIsPipe = false;
-if (typeof fifop != 'undefined') {
-    fifo = fs.open(fifop, 'a+');
-    fifoIsPipe = true;
-} else {
-    fifo = system.stdout;
-}
+function writeCmd(command, payload) {
+  fifo.write(command);
+  fifo.write(' ');
+  fifo.write(JSON.stringify(payload));
+  fifo.write('\n');
+};
 
-function writeItem(stream, item) {
-    var output = JSON.stringify(item);
-    stream.write('ITM ' + output + '\n');
-}
 
-var logLevels = {
-        "debug": 10,
-        "info": 20,
-        "warning": 30,
-        "error": 40
-    }
-
-function writeLog(stream, log) {
-    var output = JSON.stringify({
-        "time": Date.now(),
-        "message": log.message,
-        "level": logLevels[log.level]
-    });
-    stream.write('LOG ' + output + '\n');
-}
-
-function writeRequest(stream, response) {
-    var output = JSON.stringify(response);
-    stream.write('REQ ' + output + '\n');
-}
-
-function writeFinished(stream, outcome) {
-    var output = JSON.stringify({
-            "outcome": outcome
-        });
-    stream.write('FIN ' + output + '\n');
-}
+var casper = require('casper').create({logLevel: "info"});
 
 casper.on('log', function(log) {
-    writeLog(fifo, log);
+    var levels = {"debug": 10, "info": 20, "warning": 30, "error": 40};
+    writeCmd('LOG', {
+        "time": Date.now(),
+        "message": log.message,
+        "level": levels[log.level]
+    });
 });
 
-casper.on('http.status.200', function(response) {
-    writeRequest(fifo, {
+casper.on('page.resource.received', function(response) {
+    writeCmd('REQ', {
         duration: 0,    // this is wrong obviously
-        status: 200,
+        status: response.status,
         rs: this.getPageContent().length,
         url: response.url,
         method: 'GET'
     });
-})
+});
+
+casper.on('exit', function(status) {
+    writeCmd("FIN", {outcome: "finished"});
+    fifo.flush();
+});
 
 function getLinks() {
-    // Scrape the links from top-right nav of the website
+// Scrape the links from top-right nav of the website
     var links = document.querySelectorAll('ul.navigation li a');
     return Array.prototype.map.call(links, function (e) {
         return e.getAttribute('href')
     });
-}
+};
 
 // Opens casperjs homepage
+var links;
+
 casper.start('http://casperjs.org/');
 
 casper.then(function () {
@@ -77,15 +55,8 @@ casper.then(function () {
 });
 
 casper.run(function () {
-
     for(var i in links) {
-        var item = {"url": links[i], "date": new Date()}
-        writeItem(fifo, item);
-    }
-    writeFinished(fifo, "finished");
-    fifo.flush();
-    if (fifoIsPipe) {
-        fifo.close();
+      writeCmd("ITM", {"url": links[i], "date": new Date()})
     }
     this.exit();
 });

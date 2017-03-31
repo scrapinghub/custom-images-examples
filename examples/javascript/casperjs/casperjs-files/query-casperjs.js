@@ -1,7 +1,8 @@
 // Adapted example from http://casperjs.org/
 var system = require('system');
+var fs = require('fs');
 var fifopath = system.env.SHUB_FIFO_PATH;
-var fifo = fifopath ? open(fifopath, 'a+') : system.stdout;
+var fifo = fifopath ? fs.open(fifopath, 'a+') : system.stdout;
 
 function writeCmd(command, payload) {
   fifo.write(command);

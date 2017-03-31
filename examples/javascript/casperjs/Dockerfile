@@ -40,6 +40,8 @@ ADD ./scripts/* /scripts/
 RUN ln -s /scripts/start-crawl /usr/sbin/start-crawl
 RUN ln -s /scripts/list-spiders /usr/sbin/list-spiders
 RUN ln -s /scripts/test-crawl /usr/sbin/test-crawl
+# Make scripts executable
+RUN chmod +x /scripts/start-crawl /scripts/list-spiders
 
 RUN mkdir -p /home/casperjs-files
 ADD ./casperjs-files/* /home/casperjs-files/

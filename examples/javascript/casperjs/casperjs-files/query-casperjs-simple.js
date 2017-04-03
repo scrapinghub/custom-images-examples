@@ -8,6 +8,7 @@ var casper = require('casper').create({
     verbose: true,
     colorizerType: 'Dummy'
 });
+var links;
 
 function getLinks() {
 // Scrape the links from top-right nav of the website
@@ -15,11 +16,9 @@ function getLinks() {
     return Array.prototype.map.call(links, function (e) {
         return e.getAttribute('href')
     });
-};
+}
 
 // Opens casperjs homepage
-var links;
-
 casper.start('http://casperjs.org/');
 
 casper.then(function () {
@@ -27,11 +26,11 @@ casper.then(function () {
 });
 
 casper.run(function () {
-    var payload;
     for(var i in links) {
-      payload = JSON.stringify({"url": links[i], "date": new Date()})
-      fifo.write(payload);
-      fifo.write('\n');
+        fifo.write(
+            JSON.stringify({"url": links[i], "date": new Date()})
+        );
+        fifo.write('\n');
     }
     fifo.flush();
     this.exit();

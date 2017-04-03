@@ -3,7 +3,11 @@ var system = require('system');
 var fs = require('fs');
 var fifopath = system.env.SHUB_FIFO_PATH;
 var fifo = fifopath ? fs.open(fifopath, 'a+') : system.stdout;
-var casper = require('casper').create({logLevel: "info", verbose: true});
+var casper = require('casper').create({
+    logLevel: "info",
+    verbose: true,
+    colorizerType: 'Dummy'
+});
 
 function getLinks() {
 // Scrape the links from top-right nav of the website

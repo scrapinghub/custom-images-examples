@@ -35,6 +35,16 @@ RUN ln -sf /usr/local/share/casperjs-latest/bin/casperjs /usr/local/share/casper
 RUN ln -sf /usr/local/share/casperjs-latest/bin/casperjs /usr/local/bin/casperjs
 RUN ln -sf /usr/local/share/casperjs-latest/bin/casperjs /usr/bin/casperjs
 
+# Install jq to help with parsing Kumo envvars
+
+ENV JQ_VERSION 1.5
+
+RUN wget "https://github.com/stedolan/jq/releases/download/jq-$JQ_VERSION/jq-linux64" -P /home
+RUN mv /home/jq-linux64 /usr/local/bin/jq \
+    && chmod +x /usr/local/bin/jq
+
+# Install scripts to run crawl on Kumo
+
 RUN mkdir -p /scripts
 ADD ./scripts/* /scripts/
 RUN ln -s /scripts/start-crawl /usr/sbin/start-crawl

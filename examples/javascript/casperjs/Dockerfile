@@ -45,16 +45,17 @@ RUN mv /home/jq-linux64 /usr/local/bin/jq \
 
 # Install scripts to run crawl on Kumo
 
-RUN mkdir -p /scripts
-ADD ./scripts/* /scripts/
-RUN ln -s /scripts/start-crawl /usr/sbin/start-crawl
-RUN ln -s /scripts/list-spiders /usr/sbin/list-spiders
-RUN ln -s /scripts/test-crawl /usr/sbin/test-crawl
+RUN mkdir -p /kumo-scripts
+ADD ./kumo-scripts/* /kumo-scripts/
 # Make scripts executable
-RUN chmod +x /scripts/start-crawl /scripts/list-spiders
+RUN chmod +x /kumo-scripts/start-crawl /kumo-scripts/list-spiders
 
-RUN mkdir -p /home/casperjs-files
-ADD ./casperjs-files/* /home/casperjs-files/
+RUN ln -s /kumo-scripts/start-crawl /usr/sbin/start-crawl
+RUN ln -s /kumo-scripts/list-spiders /usr/sbin/list-spiders
+RUN ln -s /kumo-scripts/test-crawl /usr/sbin/test-crawl
+
+RUN mkdir -p /home/casperjs-scripts
+ADD ./casperjs-scripts/* /home/casperjs-scripts/
 
 # Default command
 CMD ["/usr/bin/casperjs"]

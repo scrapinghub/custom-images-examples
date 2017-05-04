@@ -1,0 +1,6 @@
+#!/bin/sh
+set -e
+SPIDER=$(echo "$SHUB_JOB_DATA" |jq -r .spider)
+ARGS="$(echo "$SHUB_JOB_DATA" |jq -r '.spider_args // {}|to_entries|.[]|"--\(.key)=\(.value)"')"
+echo "Running casperjs /home/casperjs-scripts/$SPIDER $ARGS"
+casperjs /home/casperjs-scripts/"$SPIDER" $ARGS

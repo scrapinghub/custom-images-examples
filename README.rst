@@ -21,6 +21,11 @@ Java
 
 - `blog.scrapinghub.com crawler <examples/java/blog.scrapinghub.com>`_
 
+JavaScript
+----------
+
+- `CasperJS crawler <examples/javascript/casperjs>`_
+
 PHP
 ---
 

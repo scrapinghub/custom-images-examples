@@ -1,6 +1,0 @@
-#!/usr/bin/env bash
-
-mkfifo casperpipe
-tail -f casperpipe &
-#SHUB_FIFO_PATH=`pwd`/casperpipe casperjs --verbose --log-level=debug /home/casperjs-scripts/query-casperjs.js
-SHUB_FIFO_PATH=`pwd`/casperpipe casperjs /home/casperjs-scripts/query-casperjs.js

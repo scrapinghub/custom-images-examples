@@ -1,14 +1,16 @@
 // Adapted example from http://casperjs.org/
 var system = require('system');
 var fs = require('fs');
+
 var fifopath = system.env.SHUB_FIFO_PATH;
 var fifo = fifopath ? fs.open(fifopath, 'a+') : system.stdout;
+var links;
+
 var casper = require('casper').create({
     logLevel: "info",
     verbose: true,
     colorizerType: 'Dummy'
 });
-var links;
 
 function getLinks() {
 // Scrape the links from top-right nav of the website
@@ -19,7 +21,7 @@ function getLinks() {
 }
 
 // Opens casperjs homepage
-casper.start('http://casperjs.org/');
+casper.start(casper.cli.options.url || 'http://casperjs.org/');
 
 casper.then(function () {
     links = this.evaluate(getLinks);

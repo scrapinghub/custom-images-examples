@@ -20,5 +20,5 @@ casper.run(function () {
     for(var i in links) {
         console.log(links[i]);
     }
-    casper.done();
+    this.exit();
 });

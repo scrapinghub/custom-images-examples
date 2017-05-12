@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+set -e
+
+SCRIPT="/app/${1:-query-casperjs.js}"
+shift || true
+casperjs $SCRIPT "$@"

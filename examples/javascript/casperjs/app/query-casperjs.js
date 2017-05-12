@@ -1,6 +1,7 @@
 // Adapted example from http://casperjs.org/
 var system = require('system');
 var fs = require('fs');
+
 var fifopath = system.env.SHUB_FIFO_PATH;
 var fifo = fifopath ? fs.open(fifopath, 'a+') : system.stdout;
 
@@ -9,10 +10,11 @@ function writeCmd(command, payload) {
   fifo.write(' ');
   fifo.write(JSON.stringify(payload));
   fifo.write('\n');
-};
+}
 
-
-var casper = require('casper').create({logLevel: "info"});
+var casper = require('casper').create({
+    logLevel: "info"
+});
 
 casper.on('log', function(log) {
     var levels = {"debug": 10, "info": 20, "warning": 30, "error": 40};
@@ -44,12 +46,12 @@ function getLinks() {
     return Array.prototype.map.call(links, function (e) {
         return e.getAttribute('href')
     });
-};
+}
 
 // Opens casperjs homepage
 var links;
 
-casper.start('http://casperjs.org/');
+casper.start(casper.cli.options.url || 'http://casperjs.org/');
 
 casper.then(function () {
     links = this.evaluate(getLinks);

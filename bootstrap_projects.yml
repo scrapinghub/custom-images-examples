@@ -1,0 +1,23 @@
+anemone:
+  path: examples/ruby/anemone
+  description: Ruby blog article crawler based on the Anemone framework
+
+casperjs:
+  path: examples/javascript/casperjs
+  description: CasperJS-based crawler parsing links from the CasperJS homepage
+
+go:
+  path: examples/go/jsontest.com
+  description: Go crawler downloading and yielding JSON items
+
+java:
+  path: examples/java/blog.scrapinghub.com
+  description: Java blog article crawler using jsoup
+
+php:
+  path: examples/php/httpbin.org
+  description: PHP-based crawler for JSON data
+
+python:
+  path: examples/python/script
+  description: Python crawler using only standard library modules

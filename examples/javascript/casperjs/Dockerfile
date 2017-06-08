@@ -1,4 +1,4 @@
-FROM scrapinghub/scrapinghub-image-casperjs:0.0.4
+FROM scrapinghub/scrapinghub-image-casperjs:0.0.6
 
 # Install scripts to run crawl on Scrapy Cloud
 ADD ./scripts/* /usr/sbin/

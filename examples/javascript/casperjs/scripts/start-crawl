@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 set -e
 
-SCRIPT="/app/$SHUB_SPIDER"
-SCRIPT_ARGS=$(env2options arguments)
-echo "Running CasperJS spider $SCRIPT $SCRIPT_ARGS"
-casperjs $SCRIPT $SCRIPT_ARGS
+shub-exec -- casperjs /app/$SHUB_SPIDER
+

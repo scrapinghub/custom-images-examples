@@ -20,6 +20,10 @@ First, build the image:
 docker build . -t casperjs-example
 ```
 
+To run CasperJS scripts locally use `test-crawl` script. This script is not a part of
+[Custom Images contract](http://shub.readthedocs.io/en/latest/custom-images-contract.html) and
+exists only to help with testing CasperJS scripts locally.
+
 - Run query-casperjs.js script:
 
   ```

@@ -1,6 +1,6 @@
 FROM ruby:2-alpine
 ENV LANG=C.UTF-8
-RUN ln -sfT /app/crawler.rb /usr/local/bin/list-spiders && \
+RUN ln -sfT /app/crawler.rb /usr/local/bin/shub-image-info && \
     ln -sfT /app/crawler.rb /usr/local/bin/start-crawl
 
 # Install bash to gain console access

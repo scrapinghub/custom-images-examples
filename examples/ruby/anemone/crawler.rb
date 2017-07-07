@@ -2,8 +2,8 @@
 require "anemone"
 require "json"
 
-if File.basename(Process::argv0) == "list-spiders"
-  puts "blog"
+if File.basename(Process::argv0) == "shub-image-info"
+  puts JSON.generate({:project_type => "other", :spiders => ["blog"]})
   exit
 end
 
